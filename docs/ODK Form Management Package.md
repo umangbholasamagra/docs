@@ -26,13 +26,18 @@ This section lists down all the possible configuration related steps to integrat
 
 1.  Download the library from the Github link. Unzip library.
 
-2.  Start Android Studio. Follow to File -> New -> Import Module . Go to the path where your extracted library is located and select it. Uncheck other modules and add 'samagra-form-management'.
+2.  Start Android Studio. Follow to File -> New -> Import Module . Go to the path where your extracted library is located and select it. Uncheck other modules and add 'collect_app'.
 
 3.  Add Gradle dependency and It's Done!
 
 ```
-api project(':samagra-form-management');`
+api project(':collect_app');`
 ```
+4. In your project's settings.gradle, Add :collect_app to included modules list.
+
+5. The project is a dummy project, for it to be running, you will have to add google services.json for your project configured on Firebase. You can follow these [steps](https://firebase.google.com/docs/android/setup) to configure projects on firebase. This is essential to test the project.
+
+6. Adding to this, we are using Firebase remote config to read the user role and list of forms for the user, to determine which forms to download. You can use other backend configurations as per your suitability.
 
 ### Giving Storage Permissions
 
@@ -130,7 +135,9 @@ public void requestStoragePermissions() {
     }
     ```
 
-2.  In the onCreate() of your Application-level class, please add the following method invocation
+2. Please make Collect as base class for your Applicationlevel class and also CollectAbstractActivity as base class for your Base level Activity class.
+
+3. In the onCreate() of your Application-level class, please add the following method invocation
 
 ```
 ComponentManager.registerFormManagementPackage(this, AppConstants.BASE_API_URL, new FormManagementSectionInteractor()); FormManagementCommunicator.setContract(ComponentManager.iFormManagementContract); ComponentManager.iFormManagementContract.setODKModuleStyle(this, R.drawable.login_bg, R.style.BaseAppTheme, R.style.FormEntryActivityTheme, R.style.BaseAppTheme_SettingsTheme_Dark, Long.MAX_VALUE);`
@@ -160,7 +167,7 @@ The method signature of setODKModuleStyle() is mentioned below
 void setODKModuleStyle(MainApplication mainApplication, int splashScreenDrawableID, int baseAppThemeStyleID, int formActivityThemeID, int customThemeId_Settings, long toolbarIconResId);`
 ```
 
-3. Apply the settings file configured above using the following snippet
+4. Apply the settings file configured above using the following snippet
 
 ```
 getIFormManagementContract().applyODKCollectSettings(context, R.raw.settings);
