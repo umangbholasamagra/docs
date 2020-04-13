@@ -264,3 +264,4 @@ getIFormManagementContract().launchFormChooserView(context, toolbarModificationO
 *  title - String (Title of toolbar) goBackOnNavIconPress - * Boolean (enables or disables back icon)
 */
 ```
+
